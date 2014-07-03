@@ -31,8 +31,12 @@
 {
     [super viewDidLoad];
     
+    self.view.tintColor = [UIColor colorWithRed:0.943 green:0.587 blue:0.110 alpha:1.000];
+    
     self.slider.minimumValue = 0.0;
     self.slider.maximumValue = 5.0;
+    self.slider.snapValue = 1.0;
+    
     [self.slider setValue:1.0 animated:YES];
 }
 

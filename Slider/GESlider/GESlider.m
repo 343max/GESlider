@@ -18,7 +18,11 @@
 @property (weak, readonly) UIView *selectedTrackView;
 @property (weak, readonly) UIPanGestureRecognizer *gestureRecognizer;
 
+@property (strong, readonly) NSArray *snapViews;
+
 @property (assign) CGPoint touchOffset;
+
+@property (assign) BOOL needsSnapViewRecreation;
 
 @end
 
@@ -45,9 +49,10 @@
 
 - (void)commonAwake
 {
+    _trackTintColor = [UIColor colorWithRed:0.907 green:0.901 blue:0.926 alpha:1.000];
+    
     _trackView = (^{
         UIView *trackView = [[UIView alloc] init];
-        trackView.backgroundColor = [UIColor colorWithRed:0.907 green:0.901 blue:0.926 alpha:1.000];
         trackView.layer.cornerRadius = 2.0;
         [self addSubview:trackView];
         return trackView;
@@ -55,7 +60,6 @@
 
     _selectedTrackView = (^{
         UIView *selectedTrackView = [[UIView alloc] init];
-        selectedTrackView.backgroundColor = [UIColor colorWithRed:0.943 green:0.587 blue:0.110 alpha:1.000];
         selectedTrackView.layer.cornerRadius = 2.0;
         [self addSubview:selectedTrackView];
         return selectedTrackView;
@@ -84,18 +88,56 @@
     [self doLayout];
 }
 
+- (float)relativeValueForValue:(float)value
+{
+    return (value - self.minimumValue) / (self.maximumValue - self.minimumValue);
+}
+
 - (CGRect)trackViewFrameForValue:(float)value
 {
     CGRect frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame), 3.0);
     frame = GERectInsideRect(self.bounds, frame, 0.5, 0.5);
-    frame.size.width *= (value - self.minimumValue) / (self.maximumValue - self.minimumValue);
-    return CGRectIntegral(frame);
+    frame.size.width *= [self relativeValueForValue:value];
+    return frame;
+}
+
+- (void)recreateSnapViews
+{
+    for (UIView *snapView in self.snapViews) {
+        [snapView removeFromSuperview];
+    }
+    
+    NSArray *snapViews = @[];
+    for (float value = self.minimumValue; value <= self.maximumValue; value += self.snapValue) {
+        UIView *snapView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 8.0, 8.0)];
+        snapView.layer.cornerRadius = 4.0;
+        [self insertSubview:snapView belowSubview:self.thumbImageView];
+        snapViews = [snapViews arrayByAddingObject:snapView];
+    }
+    
+    _snapViews = snapViews;
 }
 
 - (void)doLayout
 {
+    if (self.needsSnapViewRecreation) {
+        self.needsSnapViewRecreation = NO;
+        [self recreateSnapViews];
+    }
+    
+    CGRect frame = CGRectInset(self.bounds, (CGRectGetWidth(self.thumbImageView.frame) - CGRectGetWidth([[self.snapViews firstObject] frame])) / 2.0, 0.0);
+    for (UIView *snapView in self.snapViews) {
+        NSInteger index = [self.snapViews indexOfObject:snapView];
+        float value = self.minimumValue + index * self.snapValue;
+        snapView.backgroundColor = (value > self.value ? self.trackTintColor : self.tintColor);
+        snapView.frame = GERectInsideRect(frame, snapView.frame, [self relativeValueForValue:value], 0.5);
+    }
+    
     self.trackView.frame = [self trackViewFrameForValue:self.maximumValue];
     self.selectedTrackView.frame = [self trackViewFrameForValue:self.value];
+    
+    self.trackView.backgroundColor = self.trackTintColor;
+    self.selectedTrackView.backgroundColor = self.tintColor;
     
     [self updateThumbPosition];
 }
@@ -131,6 +173,7 @@
     if (self.value < minimumValue) {
         self.value = minimumValue;
     }
+    self.needsSnapViewRecreation = YES;
     [self setNeedsLayout];
 }
 
@@ -140,6 +183,14 @@
     if (self.value > maximumValue) {
         self.value = maximumValue;
     }
+    self.needsSnapViewRecreation = YES;
+    [self setNeedsLayout];
+}
+
+- (void)setSnapValue:(float)snapValue
+{
+    _snapValue = snapValue;
+    self.needsSnapViewRecreation = YES;
     [self setNeedsLayout];
 }
 
@@ -156,14 +207,28 @@
     _value = value;
     
     if (animated) {
-        [self doLayout];
-        [UIView animateWithDuration:0.2
+        [UIView animateWithDuration:0.1
                          animations:^{
                              [self updateThumbPosition];
                          }];
     } else {
         [self setNeedsLayout];
     }
+}
+
+- (void)tintColorDidChange
+{
+    [super tintColorDidChange];
+    [self doLayout];
+}
+
+- (void)setTrackTintColor:(UIColor *)trackTintColor
+{
+    if ([trackTintColor isEqual:_trackTintColor])
+        return;
+    
+    _trackTintColor = trackTintColor;
+    [self doLayout];
 }
 
 @end

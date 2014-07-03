@@ -13,6 +13,9 @@
 @property (assign, nonatomic) float minimumValue;
 @property (assign, nonatomic) float maximumValue;
 @property (assign, nonatomic) float value;
+@property (assign, nonatomic) float snapValue;
+
+@property (strong, nonatomic) UIColor *trackTintColor;
 
 - (void)setValue:(float)value animated:(BOOL)animated;
 
