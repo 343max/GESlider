@@ -6,12 +6,15 @@
 //  Copyright (c) 2014 Max von Webel. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "GERectHelpers.h"
 #import "GESlider.h"
 
 @interface GESlider ()
 
 @property (weak, readonly) UIImageView *thumbImageView;
+@property (weak, readonly) UIView *trackView;
 @property (weak, readonly) UIPanGestureRecognizer *gestureRecognizer;
 
 @property (assign) CGPoint touchOffset;
@@ -41,6 +44,14 @@
 
 - (void)commonAwake
 {
+    _trackView = (^{
+        UIView *trackView = [[UIView alloc] init];
+        trackView.backgroundColor = [UIColor colorWithRed:0.907 green:0.901 blue:0.926 alpha:1.000];
+        trackView.layer.cornerRadius = 1.0;
+        [self addSubview:trackView];
+        return trackView;
+    })();
+
     _thumbImageView = (^{
         UIImageView *thumbImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GESliderThumbImage"]];
         [self addSubview:thumbImageView];
@@ -66,6 +77,11 @@
 
 - (void)doLayout
 {
+    self.trackView.frame = (^{
+        CGRect frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame), 3.0);
+        return GERectInsideRect(self.bounds, frame, 0.5, 0.5);
+    })();
+    
     [self updateThumbPosition];
 }
 
