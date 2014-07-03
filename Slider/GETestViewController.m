@@ -38,7 +38,7 @@
     self.slider.maximumValue = 5.0;
     self.slider.stepValue = 1.0;
     
-    [self.slider setValue:3.0 animated:YES];
+    [self.slider setValue:2.0 animated:YES];
     [self.slider addTarget:self action:@selector(didSlide:) forControlEvents:UIControlEventValueChanged];
     [self didSlide:self.slider];
 }

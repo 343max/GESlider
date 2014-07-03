@@ -24,6 +24,8 @@
 
 @property (assign) BOOL needsStepViewRecreation;
 
+@property (assign, nonatomic) float internalValue;
+
 @end
 
 
@@ -129,12 +131,12 @@
     for (UIView *stepView in self.stepViews) {
         NSInteger index = [self.stepViews indexOfObject:stepView];
         float value = self.minimumValue + index * self.stepValue;
-        stepView.backgroundColor = (value > self.value ? self.trackTintColor : self.tintColor);
+        stepView.backgroundColor = (value > self.internalValue ? self.trackTintColor : self.tintColor);
         stepView.frame = GERectInsideRect(frame, stepView.frame, [self relativeValueForValue:value], 0.5);
     }
     
     self.trackView.frame = [self trackViewFrameForValue:self.maximumValue];
-    self.selectedTrackView.frame = [self trackViewFrameForValue:self.value];
+    self.selectedTrackView.frame = [self trackViewFrameForValue:self.internalValue];
     
     self.trackView.backgroundColor = self.trackTintColor;
     self.selectedTrackView.backgroundColor = self.tintColor;
@@ -153,8 +155,8 @@
         case UIGestureRecognizerStateCancelled: {
             CGPoint location = [panGestureRecognizer locationInView:self];
             float offset = (location.x - self.touchOffset.x) / (CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame));
-            self.value = offset * (self.maximumValue - self.minimumValue) + self.minimumValue;
-            [self updateThumbPosition];
+            self.internalValue = offset * (self.maximumValue - self.minimumValue) + self.minimumValue;
+            [self doLayout];
             break;
         }
             
@@ -163,23 +165,24 @@
     }
     
     if (panGestureRecognizer.state == UIGestureRecognizerStateEnded || panGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
+        float value = self.internalValue;
         if (self.stepValue != 0.0) {
-            float value = roundf((self.value - self.minimumValue) / self.stepValue) * self.stepValue + self.minimumValue;
-            [self setValue:value animated:YES];
+            value = roundf((value - self.minimumValue) / self.stepValue) * self.stepValue + self.minimumValue;
         }
+        [self setValue:value animated:YES];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
 
 - (void)updateThumbPosition
 {
-    self.thumbImageView.frame = GERectInsideRect(self.bounds, self.thumbImageView.frame, (self.value - self.minimumValue) / (self.maximumValue - self.minimumValue), 0.5);
+    self.thumbImageView.frame = GERectInsideRect(self.bounds, self.thumbImageView.frame, (self.internalValue - self.minimumValue) / (self.maximumValue - self.minimumValue), 0.5);
 }
 
 - (void)setMinimumValue:(float)minimumValue
 {
     _minimumValue = minimumValue;
-    if (self.value < minimumValue) {
+    if (self.internalValue < minimumValue) {
         self.value = minimumValue;
     }
     self.needsStepViewRecreation = YES;
@@ -189,7 +192,7 @@
 - (void)setMaximumValue:(float)maximumValue
 {
     _maximumValue = maximumValue;
-    if (self.value > maximumValue) {
+    if (self.internalValue > maximumValue) {
         self.value = maximumValue;
     }
     self.needsStepViewRecreation = YES;
@@ -208,17 +211,25 @@
     [self setValue:value animated:NO];
 }
 
+- (void)setInternalValue:(float)internalValue
+{
+    internalValue = fminf(internalValue, self.maximumValue);
+    internalValue = fmaxf(internalValue, self.minimumValue);
+
+    _internalValue = internalValue;
+}
+
 - (void)setValue:(float)value animated:(BOOL)animated
 {
     value = fminf(value, self.maximumValue);
     value = fmaxf(value, self.minimumValue);
-    
-    _value = value;
+  
+    self.internalValue = _value = value;
     
     if (animated) {
         [UIView animateWithDuration:0.1
                          animations:^{
-                             [self updateThumbPosition];
+                             [self doLayout];
                          }];
     } else {
         [self setNeedsLayout];
