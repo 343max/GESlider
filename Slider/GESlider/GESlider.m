@@ -12,6 +12,9 @@
 @interface GESlider ()
 
 @property (weak, readonly) UIImageView *thumbImageView;
+@property (weak, readonly) UIPanGestureRecognizer *gestureRecognizer;
+
+@property (assign) CGPoint touchOffset;
 
 @end
 
@@ -41,7 +44,14 @@
     _thumbImageView = (^{
         UIImageView *thumbImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GESliderThumbImage"]];
         [self addSubview:thumbImageView];
+        thumbImageView.userInteractionEnabled = YES;
         return thumbImageView;
+    })();
+    
+    _gestureRecognizer = (^{
+        UIPanGestureRecognizer *gestureReocgnizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
+        [self.thumbImageView addGestureRecognizer:gestureReocgnizer];
+        return gestureReocgnizer;
     })();
     
     [self doLayout];
@@ -57,6 +67,26 @@
 - (void)doLayout
 {
     [self updateThumbPosition];
+}
+
+- (void)didPan:(UIPanGestureRecognizer *)panGestureRecognizer
+{
+    switch (panGestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            self.touchOffset = [panGestureRecognizer locationInView:self.thumbImageView];
+            break;
+        case UIGestureRecognizerStateChanged:
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled: {
+            CGPoint location = [panGestureRecognizer locationInView:self];
+            float offset = (location.x - self.touchOffset.x) / (CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame));
+            self.value = offset * (self.maximumValue - self.minimumValue) + self.minimumValue;
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 - (void)updateThumbPosition
