@@ -15,6 +15,7 @@
 
 @property (weak, readonly) UIImageView *thumbImageView;
 @property (weak, readonly) UIView *trackView;
+@property (weak, readonly) UIView *selectedTrackView;
 @property (weak, readonly) UIPanGestureRecognizer *gestureRecognizer;
 
 @property (assign) CGPoint touchOffset;
@@ -47,9 +48,17 @@
     _trackView = (^{
         UIView *trackView = [[UIView alloc] init];
         trackView.backgroundColor = [UIColor colorWithRed:0.907 green:0.901 blue:0.926 alpha:1.000];
-        trackView.layer.cornerRadius = 1.0;
+        trackView.layer.cornerRadius = 2.0;
         [self addSubview:trackView];
         return trackView;
+    })();
+
+    _selectedTrackView = (^{
+        UIView *selectedTrackView = [[UIView alloc] init];
+        selectedTrackView.backgroundColor = [UIColor colorWithRed:0.943 green:0.587 blue:0.110 alpha:1.000];
+        selectedTrackView.layer.cornerRadius = 2.0;
+        [self addSubview:selectedTrackView];
+        return selectedTrackView;
     })();
 
     _thumbImageView = (^{
@@ -75,12 +84,18 @@
     [self doLayout];
 }
 
+- (CGRect)trackViewFrameForValue:(float)value
+{
+    CGRect frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame), 3.0);
+    frame = GERectInsideRect(self.bounds, frame, 0.5, 0.5);
+    frame.size.width *= (value - self.minimumValue) / (self.maximumValue - self.minimumValue);
+    return CGRectIntegral(frame);
+}
+
 - (void)doLayout
 {
-    self.trackView.frame = (^{
-        CGRect frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame), 3.0);
-        return GERectInsideRect(self.bounds, frame, 0.5, 0.5);
-    })();
+    self.trackView.frame = [self trackViewFrameForValue:self.maximumValue];
+    self.selectedTrackView.frame = [self trackViewFrameForValue:self.value];
     
     [self updateThumbPosition];
 }
@@ -141,6 +156,7 @@
     _value = value;
     
     if (animated) {
+        [self doLayout];
         [UIView animateWithDuration:0.2
                          animations:^{
                              [self updateThumbPosition];
