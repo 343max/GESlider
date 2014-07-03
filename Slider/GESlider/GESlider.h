@@ -13,7 +13,7 @@
 @property (assign, nonatomic) float minimumValue;
 @property (assign, nonatomic) float maximumValue;
 @property (assign, nonatomic) float value;
-@property (assign, nonatomic) float snapValue;
+@property (assign, nonatomic) float stepValue;
 
 @property (strong, nonatomic) UIColor *trackTintColor;
 

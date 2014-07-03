@@ -18,11 +18,11 @@
 @property (weak, readonly) UIView *selectedTrackView;
 @property (weak, readonly) UIPanGestureRecognizer *gestureRecognizer;
 
-@property (strong, readonly) NSArray *snapViews;
+@property (strong, readonly) NSArray *stepViews;
 
 @property (assign) CGPoint touchOffset;
 
-@property (assign) BOOL needsSnapViewRecreation;
+@property (assign) BOOL needsStepViewRecreation;
 
 @end
 
@@ -101,36 +101,36 @@
     return frame;
 }
 
-- (void)recreateSnapViews
+- (void)recreateStepViews
 {
-    for (UIView *snapView in self.snapViews) {
-        [snapView removeFromSuperview];
+    for (UIView *stepView in self.stepViews) {
+        [stepView removeFromSuperview];
     }
     
-    NSArray *snapViews = @[];
-    for (float value = self.minimumValue; value <= self.maximumValue; value += self.snapValue) {
-        UIView *snapView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 8.0, 8.0)];
-        snapView.layer.cornerRadius = 4.0;
-        [self insertSubview:snapView belowSubview:self.thumbImageView];
-        snapViews = [snapViews arrayByAddingObject:snapView];
+    NSArray *stepViews = @[];
+    for (float value = self.minimumValue; value <= self.maximumValue; value += self.stepValue) {
+        UIView *stepView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 8.0, 8.0)];
+        stepView.layer.cornerRadius = 4.0;
+        [self insertSubview:stepView belowSubview:self.thumbImageView];
+        stepViews = [stepViews arrayByAddingObject:stepView];
     }
     
-    _snapViews = snapViews;
+    _stepViews = stepViews;
 }
 
 - (void)doLayout
 {
-    if (self.needsSnapViewRecreation) {
-        self.needsSnapViewRecreation = NO;
-        [self recreateSnapViews];
+    if (self.needsStepViewRecreation) {
+        self.needsStepViewRecreation = NO;
+        [self recreateStepViews];
     }
     
-    CGRect frame = CGRectInset(self.bounds, (CGRectGetWidth(self.thumbImageView.frame) - CGRectGetWidth([[self.snapViews firstObject] frame])) / 2.0, 0.0);
-    for (UIView *snapView in self.snapViews) {
-        NSInteger index = [self.snapViews indexOfObject:snapView];
-        float value = self.minimumValue + index * self.snapValue;
-        snapView.backgroundColor = (value > self.value ? self.trackTintColor : self.tintColor);
-        snapView.frame = GERectInsideRect(frame, snapView.frame, [self relativeValueForValue:value], 0.5);
+    CGRect frame = CGRectInset(self.bounds, (CGRectGetWidth(self.thumbImageView.frame) - CGRectGetWidth([[self.stepViews firstObject] frame])) / 2.0, 0.0);
+    for (UIView *stepView in self.stepViews) {
+        NSInteger index = [self.stepViews indexOfObject:stepView];
+        float value = self.minimumValue + index * self.stepValue;
+        stepView.backgroundColor = (value > self.value ? self.trackTintColor : self.tintColor);
+        stepView.frame = GERectInsideRect(frame, stepView.frame, [self relativeValueForValue:value], 0.5);
     }
     
     self.trackView.frame = [self trackViewFrameForValue:self.maximumValue];
@@ -173,7 +173,7 @@
     if (self.value < minimumValue) {
         self.value = minimumValue;
     }
-    self.needsSnapViewRecreation = YES;
+    self.needsStepViewRecreation = YES;
     [self setNeedsLayout];
 }
 
@@ -183,14 +183,14 @@
     if (self.value > maximumValue) {
         self.value = maximumValue;
     }
-    self.needsSnapViewRecreation = YES;
+    self.needsStepViewRecreation = YES;
     [self setNeedsLayout];
 }
 
-- (void)setSnapValue:(float)snapValue
+- (void)setStepValue:(float)stepValue
 {
-    _snapValue = snapValue;
-    self.needsSnapViewRecreation = YES;
+    _stepValue = stepValue;
+    self.needsStepViewRecreation = YES;
     [self setNeedsLayout];
 }
 

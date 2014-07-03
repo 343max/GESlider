@@ -35,7 +35,7 @@
     
     self.slider.minimumValue = 0.0;
     self.slider.maximumValue = 5.0;
-    self.slider.snapValue = 1.0;
+    self.slider.stepValue = 1.0;
     
     [self.slider setValue:1.0 animated:YES];
 }
