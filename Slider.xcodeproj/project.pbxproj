@@ -19,6 +19,11 @@
 		5012171F1965921E002EFB5C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501217071965921E002EFB5C /* UIKit.framework */; };
 		501217271965921E002EFB5C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 501217251965921E002EFB5C /* InfoPlist.strings */; };
 		501217291965921E002EFB5C /* SliderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 501217281965921E002EFB5C /* SliderTests.m */; };
+		5012173519659284002EFB5C /* GETestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5012173319659284002EFB5C /* GETestViewController.m */; };
+		5012173619659284002EFB5C /* GETestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5012173419659284002EFB5C /* GETestViewController.xib */; };
+		5012173A196597EF002EFB5C /* GESlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 50121739196597EF002EFB5C /* GESlider.m */; };
+		5012173C19659811002EFB5C /* GESlider.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5012173B19659811002EFB5C /* GESlider.xcassets */; };
+		5012173F19659AB0002EFB5C /* GERectHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5012173E19659AB0002EFB5C /* GERectHelpers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +53,14 @@
 		501217241965921E002EFB5C /* SliderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SliderTests-Info.plist"; sourceTree = "<group>"; };
 		501217261965921E002EFB5C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		501217281965921E002EFB5C /* SliderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SliderTests.m; sourceTree = "<group>"; };
+		5012173219659284002EFB5C /* GETestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETestViewController.h; sourceTree = "<group>"; };
+		5012173319659284002EFB5C /* GETestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GETestViewController.m; sourceTree = "<group>"; };
+		5012173419659284002EFB5C /* GETestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GETestViewController.xib; sourceTree = "<group>"; };
+		50121738196597EF002EFB5C /* GESlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GESlider.h; sourceTree = "<group>"; };
+		50121739196597EF002EFB5C /* GESlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GESlider.m; sourceTree = "<group>"; };
+		5012173B19659811002EFB5C /* GESlider.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = GESlider.xcassets; sourceTree = "<group>"; };
+		5012173D19659AB0002EFB5C /* GERectHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GERectHelpers.h; sourceTree = "<group>"; };
+		5012173E19659AB0002EFB5C /* GERectHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GERectHelpers.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,10 +120,14 @@
 		501217091965921E002EFB5C /* Slider */ = {
 			isa = PBXGroup;
 			children = (
+				50121737196597D2002EFB5C /* GESlider */,
 				501217121965921E002EFB5C /* GEAppDelegate.h */,
 				501217131965921E002EFB5C /* GEAppDelegate.m */,
 				501217151965921E002EFB5C /* Images.xcassets */,
 				5012170A1965921E002EFB5C /* Supporting Files */,
+				5012173219659284002EFB5C /* GETestViewController.h */,
+				5012173319659284002EFB5C /* GETestViewController.m */,
+				5012173419659284002EFB5C /* GETestViewController.xib */,
 			);
 			path = Slider;
 			sourceTree = "<group>";
@@ -142,6 +159,18 @@
 				501217251965921E002EFB5C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		50121737196597D2002EFB5C /* GESlider */ = {
+			isa = PBXGroup;
+			children = (
+				5012173D19659AB0002EFB5C /* GERectHelpers.h */,
+				5012173E19659AB0002EFB5C /* GERectHelpers.m */,
+				50121738196597EF002EFB5C /* GESlider.h */,
+				50121739196597EF002EFB5C /* GESlider.m */,
+				5012173B19659811002EFB5C /* GESlider.xcassets */,
+			);
+			path = GESlider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +249,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5012173C19659811002EFB5C /* GESlider.xcassets in Resources */,
+				5012173619659284002EFB5C /* GETestViewController.xib in Resources */,
 				5012170E1965921E002EFB5C /* InfoPlist.strings in Resources */,
 				501217161965921E002EFB5C /* Images.xcassets in Resources */,
 			);
@@ -240,7 +271,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5012173A196597EF002EFB5C /* GESlider.m in Sources */,
 				501217141965921E002EFB5C /* GEAppDelegate.m in Sources */,
+				5012173519659284002EFB5C /* GETestViewController.m in Sources */,
+				5012173F19659AB0002EFB5C /* GERectHelpers.m in Sources */,
 				501217101965921E002EFB5C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,6 +472,7 @@
 				5012172E1965921E002EFB5C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5012172F1965921E002EFB5C /* Build configuration list for PBXNativeTarget "SliderTests" */ = {
 			isa = XCConfigurationList;
@@ -446,6 +481,7 @@
 				501217311965921E002EFB5C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
