@@ -13,6 +13,7 @@
 @interface GETestViewController ()
 
 @property (weak, nonatomic) IBOutlet GESlider *slider;
+@property (weak, nonatomic) IBOutlet UILabel *label;
 
 @end
 
@@ -33,11 +34,18 @@
     
     self.view.tintColor = [UIColor colorWithRed:0.943 green:0.587 blue:0.110 alpha:1.000];
     
-    self.slider.minimumValue = 0.0;
+    self.slider.minimumValue = 1.0;
     self.slider.maximumValue = 5.0;
     self.slider.stepValue = 1.0;
     
-    [self.slider setValue:1.0 animated:YES];
+    [self.slider setValue:3.0 animated:YES];
+    [self.slider addTarget:self action:@selector(didSlide:) forControlEvents:UIControlEventValueChanged];
+    [self didSlide:self.slider];
+}
+
+- (IBAction)didSlide:(GESlider *)sender
+{
+    self.label.text = [NSString stringWithFormat:@"%f", sender.value];
 }
 
 - (void)didReceiveMemoryWarning

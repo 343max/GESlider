@@ -154,11 +154,20 @@
             CGPoint location = [panGestureRecognizer locationInView:self];
             float offset = (location.x - self.touchOffset.x) / (CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame));
             self.value = offset * (self.maximumValue - self.minimumValue) + self.minimumValue;
+            [self updateThumbPosition];
             break;
         }
             
         default:
             break;
+    }
+    
+    if (panGestureRecognizer.state == UIGestureRecognizerStateEnded || panGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
+        if (self.stepValue != 0.0) {
+            float value = roundf((self.value - self.minimumValue) / self.stepValue) * self.stepValue + self.minimumValue;
+            [self setValue:value animated:YES];
+        }
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
 
