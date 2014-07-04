@@ -176,7 +176,10 @@
 
 - (void)updateThumbPosition
 {
-    self.thumbImageView.frame = GERectInsideRect(self.bounds, self.thumbImageView.frame, (self.internalValue - self.minimumValue) / (self.maximumValue - self.minimumValue), 0.5);
+    CGRect frame = GERectInsideRect(self.bounds, self.thumbImageView.frame, (self.internalValue - self.minimumValue) / (self.maximumValue - self.minimumValue), 0.5);
+    frame.origin.x = roundf(frame.origin.x * 2.0) / 2.0;
+    frame.origin.y = roundf(frame.origin.y * 2.0) / 2.0;
+    self.thumbImageView.frame = frame;
 }
 
 - (void)setMinimumValue:(float)minimumValue
