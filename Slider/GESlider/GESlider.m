@@ -44,13 +44,12 @@
 {
     [super awakeFromNib];
     
-    _maximumValue = 1.0;
-    
     [self commonAwake];
 }
 
 - (void)commonAwake
 {
+    _maximumValue = 1.0;
     _trackTintColor = [UIColor colorWithRed:0.907 green:0.901 blue:0.926 alpha:1.000];
     
     _trackView = (^{
