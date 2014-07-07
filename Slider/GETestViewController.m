@@ -10,7 +10,7 @@
 
 #import "GETestViewController.h"
 
-@interface GETestViewController ()
+@interface GETestViewController () <GESliderDelegate>
 
 @property (weak, nonatomic) IBOutlet GESlider *steppingSlider;
 @property (weak, nonatomic) IBOutlet GESlider *slider;
@@ -35,9 +35,10 @@
     
     self.view.tintColor = [UIColor colorWithRed:0.943 green:0.587 blue:0.110 alpha:1.000];
     
-    self.steppingSlider.minimumValue = 1.0;
+    self.steppingSlider.minimumValue = 0.0;
     self.steppingSlider.maximumValue = 5.0;
     self.steppingSlider.stepValue = 1.0;
+    self.steppingSlider.delegate = self;
     self.steppingSlider.showValueLabelWhilePanning = YES;
     
     [self.steppingSlider setValue:2.0 animated:YES];
@@ -59,5 +60,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark GESliderDelegate
+
+- (NSString *)descriptionForValue:(float)value ofSlider:(GESlider *)slider
+{
+    switch ((int)value) {
+        case 0:
+            return @"No Stops";
+        case 1:
+            return @"1 Stop";
+        default:
+            return [NSString stringWithFormat:@"%.0f Stops", value];
+    }
+}
+
 
 @end
