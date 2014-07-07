@@ -76,7 +76,6 @@
     
     _valueLabel = (^{
         UILabel *valueLabel = [[UILabel alloc] init];
-        [self addSubview:valueLabel];
         return valueLabel;
     })();
     
@@ -109,7 +108,7 @@
     return frame;
 }
 
-- (float)steppedValueFoValue:(float)value
+- (float)steppedValueForValue:(float)value
 {
     if (self.stepValue == 0) {
         return value;
@@ -123,7 +122,24 @@
     if (!self.showValueLabelWhilePanning)
         return;
     
+    value = [self steppedValueForValue:value];
     
+    if (value == self.recentLabelValue)
+        return;
+    
+    self.recentLabelValue = value;
+    
+    NSString *stringValue = (^{
+        if ([self.delegate respondsToSelector:@selector(descriptionForValue:ofSlider:)]) {
+            return [self.delegate descriptionForValue:value ofSlider:self];
+        } else {
+            return [NSString stringWithFormat:@"%f", value];
+        }
+    })();
+    
+    self.valueLabel.text = stringValue;
+    [self.valueLabel sizeToFit];
+    [self addSubview:self.valueLabel];
 }
 
 - (void)recreateStepViews
@@ -185,6 +201,7 @@
             CGPoint location = [panGestureRecognizer locationInView:self];
             float offset = (location.x - self.touchOffset.x) / (CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame));
             self.internalValue = offset * (self.maximumValue - self.minimumValue) + self.minimumValue;
+            [self updateLabelForValue:self.internalValue];
             [self doLayout];
             break;
         }
@@ -194,7 +211,7 @@
     }
     
     if (panGestureRecognizer.state == UIGestureRecognizerStateEnded || panGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
-        float value = [self steppedValueFoValue:self.internalValue];
+        float value = [self steppedValueForValue:self.internalValue];
         [self setValue:value animated:YES];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }

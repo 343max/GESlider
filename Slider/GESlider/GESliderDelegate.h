@@ -14,6 +14,6 @@
 
 @optional
 
-- (NSString *)labelForSlider:(GESlider *)slider value:(float)value;
+- (NSString *)descriptionForValue:(float)value ofSlider:(GESlider *)slider;
 
 @end
