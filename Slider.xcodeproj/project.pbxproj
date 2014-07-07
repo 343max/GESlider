@@ -13,7 +13,6 @@
 		5012170E1965921E002EFB5C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5012170C1965921E002EFB5C /* InfoPlist.strings */; };
 		501217101965921E002EFB5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5012170F1965921E002EFB5C /* main.m */; };
 		501217141965921E002EFB5C /* GEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 501217131965921E002EFB5C /* GEAppDelegate.m */; };
-		501217161965921E002EFB5C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 501217151965921E002EFB5C /* Images.xcassets */; };
 		5012171D1965921E002EFB5C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5012171C1965921E002EFB5C /* XCTest.framework */; };
 		5012171E1965921E002EFB5C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501217031965921E002EFB5C /* Foundation.framework */; };
 		5012171F1965921E002EFB5C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501217071965921E002EFB5C /* UIKit.framework */; };
@@ -48,7 +47,6 @@
 		501217111965921E002EFB5C /* Slider-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Slider-Prefix.pch"; sourceTree = "<group>"; };
 		501217121965921E002EFB5C /* GEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GEAppDelegate.h; sourceTree = "<group>"; };
 		501217131965921E002EFB5C /* GEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GEAppDelegate.m; sourceTree = "<group>"; };
-		501217151965921E002EFB5C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5012171B1965921E002EFB5C /* SliderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SliderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012171C1965921E002EFB5C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		501217241965921E002EFB5C /* SliderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SliderTests-Info.plist"; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 				50121737196597D2002EFB5C /* GESlider */,
 				501217121965921E002EFB5C /* GEAppDelegate.h */,
 				501217131965921E002EFB5C /* GEAppDelegate.m */,
-				501217151965921E002EFB5C /* Images.xcassets */,
 				5012170A1965921E002EFB5C /* Supporting Files */,
 				5012173219659284002EFB5C /* GETestViewController.h */,
 				5012173319659284002EFB5C /* GETestViewController.m */,
@@ -259,7 +256,6 @@
 				5012173C19659811002EFB5C /* GESlider.xcassets in Resources */,
 				5012173619659284002EFB5C /* GETestViewController.xib in Resources */,
 				5012170E1965921E002EFB5C /* InfoPlist.strings in Resources */,
-				501217161965921E002EFB5C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
