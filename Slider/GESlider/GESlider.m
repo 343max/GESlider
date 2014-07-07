@@ -110,7 +110,7 @@
 {
     CGRect frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame), 3.0);
     frame = GERectInsideRect(self.bounds, frame, 0.5, 0.5);
-    frame.size.width *= [self relativeValueForValue:value];
+    frame.size.width = roundf(frame.size.width * [self relativeValueForValue:value] * 2.0) / 2.0;
     return frame;
 }
 
