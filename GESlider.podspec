@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.platform           = :ios, "7.0"
   s.source             = { :git => "https://github.com/343max/GESlider.git", :tag => "0.1" }
   s.source_files       = "Slider/GESlider/*.{h,m}"
-  s.resources          = "Slider/GESlider/GESlider.xcassets"
+  s.resources          = "Slider/Assets/*.png"
 end

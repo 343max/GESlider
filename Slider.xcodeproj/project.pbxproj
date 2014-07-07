@@ -21,9 +21,9 @@
 		5012173519659284002EFB5C /* GETestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5012173319659284002EFB5C /* GETestViewController.m */; };
 		5012173619659284002EFB5C /* GETestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5012173419659284002EFB5C /* GETestViewController.xib */; };
 		5012173A196597EF002EFB5C /* GESlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 50121739196597EF002EFB5C /* GESlider.m */; };
-		5012173C19659811002EFB5C /* GESlider.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5012173B19659811002EFB5C /* GESlider.xcassets */; };
 		5012173F19659AB0002EFB5C /* GERectHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5012173E19659AB0002EFB5C /* GERectHelpers.m */; };
 		5095CB22196AE8AB008768DB /* GELabelWithPadding.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095CB21196AE8AB008768DB /* GELabelWithPadding.m */; };
+		5095CB29196AF67C008768DB /* GESliderThumbImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5095CB28196AF67C008768DB /* GESliderThumbImage@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,12 +57,12 @@
 		5012173419659284002EFB5C /* GETestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GETestViewController.xib; sourceTree = "<group>"; };
 		50121738196597EF002EFB5C /* GESlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GESlider.h; sourceTree = "<group>"; };
 		50121739196597EF002EFB5C /* GESlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GESlider.m; sourceTree = "<group>"; };
-		5012173B19659811002EFB5C /* GESlider.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = GESlider.xcassets; sourceTree = "<group>"; };
 		5012173D19659AB0002EFB5C /* GERectHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GERectHelpers.h; sourceTree = "<group>"; };
 		5012173E19659AB0002EFB5C /* GERectHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GERectHelpers.m; sourceTree = "<group>"; };
 		5095CB1F196ADDAB008768DB /* GESliderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GESliderDelegate.h; sourceTree = "<group>"; };
 		5095CB20196AE8AB008768DB /* GELabelWithPadding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GELabelWithPadding.h; sourceTree = "<group>"; };
 		5095CB21196AE8AB008768DB /* GELabelWithPadding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GELabelWithPadding.m; sourceTree = "<group>"; };
+		5095CB28196AF67C008768DB /* GESliderThumbImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GESliderThumbImage@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +122,7 @@
 		501217091965921E002EFB5C /* Slider */ = {
 			isa = PBXGroup;
 			children = (
+				5095CB27196AF658008768DB /* Assets */,
 				50121737196597D2002EFB5C /* GESlider */,
 				501217121965921E002EFB5C /* GEAppDelegate.h */,
 				501217131965921E002EFB5C /* GEAppDelegate.m */,
@@ -170,11 +171,18 @@
 				50121738196597EF002EFB5C /* GESlider.h */,
 				50121739196597EF002EFB5C /* GESlider.m */,
 				5095CB1F196ADDAB008768DB /* GESliderDelegate.h */,
-				5012173B19659811002EFB5C /* GESlider.xcassets */,
 				5095CB20196AE8AB008768DB /* GELabelWithPadding.h */,
 				5095CB21196AE8AB008768DB /* GELabelWithPadding.m */,
 			);
 			path = GESlider;
+			sourceTree = "<group>";
+		};
+		5095CB27196AF658008768DB /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				5095CB28196AF67C008768DB /* GESliderThumbImage@2x.png */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,8 +261,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5012173C19659811002EFB5C /* GESlider.xcassets in Resources */,
 				5012173619659284002EFB5C /* GETestViewController.xib in Resources */,
+				5095CB29196AF67C008768DB /* GESliderThumbImage@2x.png in Resources */,
 				5012170E1965921E002EFB5C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
