@@ -75,7 +75,13 @@
     })();
     
     _valueLabel = (^{
-        UILabel *valueLabel = [[UILabel alloc] init];
+        GELabelWithPadding *valueLabel = [[GELabelWithPadding alloc] init];
+        valueLabel.edgeInsets = UIEdgeInsetsMake(0.0, 4.0, 0.0, 4.0);
+        valueLabel.textAlignment = NSTextAlignmentCenter;
+        valueLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.8];
+        valueLabel.textColor = [UIColor whiteColor];
+        valueLabel.layer.cornerRadius = 3.0;
+        valueLabel.clipsToBounds = YES;
         return valueLabel;
     })();
     
@@ -133,13 +139,39 @@
         if ([self.delegate respondsToSelector:@selector(descriptionForValue:ofSlider:)]) {
             return [self.delegate descriptionForValue:value ofSlider:self];
         } else {
-            return [NSString stringWithFormat:@"%f", value];
+            return [NSString stringWithFormat:@"%.2f", value];
         }
     })();
     
     self.valueLabel.text = stringValue;
-    [self.valueLabel sizeToFit];
-    [self addSubview:self.valueLabel];
+    
+    CGRect frame = CGRectZero;
+    frame.size = [self.valueLabel sizeThatFits:CGSizeZero];
+    frame.origin.x = CGRectGetMaxX([self trackViewFrameForValue:value]) - frame.size.width / 2.0;
+    frame.origin.y = CGRectGetMinY(self.thumbImageView.frame) - frame.size.height;
+    
+    if (self.valueLabel.superview == nil) {
+        self.valueLabel.frame = frame;
+        [self addSubview:self.valueLabel];
+    } else {
+        [UIView animateWithDuration:0.1
+                              delay:0.0 options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             self.valueLabel.frame = frame;
+                         }
+                         completion:nil];
+    }
+}
+
+- (void)removeValueLabelAnimated
+{
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         self.valueLabel.alpha = 0.0;
+                     } completion:^(BOOL finished) {
+                         [self.valueLabel removeFromSuperview];
+                         self.valueLabel.alpha = 1.0;
+                     }];
 }
 
 - (void)recreateStepViews
@@ -213,6 +245,7 @@
     if (panGestureRecognizer.state == UIGestureRecognizerStateEnded || panGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
         float value = [self steppedValueForValue:self.internalValue];
         [self setValue:value animated:YES];
+        [self removeValueLabelAnimated];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }

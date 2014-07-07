@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GELabelWithPadding.h"
 #import "GESliderDelegate.h"
 
 @interface GESlider : UIControl
@@ -18,7 +19,7 @@
 
 @property (strong, nonatomic) UIColor *trackTintColor;
 
-@property (strong, readonly) UILabel *valueLabel;
+@property (strong, readonly) GELabelWithPadding *valueLabel;
 @property (assign) BOOL showValueLabelWhilePanning;
 
 @property (assign) id<GESliderDelegate> delegate;
