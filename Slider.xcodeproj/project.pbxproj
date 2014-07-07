@@ -61,6 +61,7 @@
 		5012173B19659811002EFB5C /* GESlider.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = GESlider.xcassets; sourceTree = "<group>"; };
 		5012173D19659AB0002EFB5C /* GERectHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GERectHelpers.h; sourceTree = "<group>"; };
 		5012173E19659AB0002EFB5C /* GERectHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GERectHelpers.m; sourceTree = "<group>"; };
+		5095CB1F196ADDAB008768DB /* GESliderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GESliderDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +169,7 @@
 				5012173E19659AB0002EFB5C /* GERectHelpers.m */,
 				50121738196597EF002EFB5C /* GESlider.h */,
 				50121739196597EF002EFB5C /* GESlider.m */,
+				5095CB1F196ADDAB008768DB /* GESliderDelegate.h */,
 				5012173B19659811002EFB5C /* GESlider.xcassets */,
 			);
 			path = GESlider;

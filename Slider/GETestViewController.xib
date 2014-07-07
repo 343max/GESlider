@@ -7,7 +7,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GETestViewController">
             <connections>
                 <outlet property="label" destination="TIe-9d-aIx" id="Xdm-TI-zjj"/>
-                <outlet property="slider" destination="16B-Lc-OuB" id="Rfz-wS-IcP"/>
+                <outlet property="slider" destination="hXv-0B-It1" id="znj-YQ-iKD"/>
+                <outlet property="steppingSlider" destination="16B-Lc-OuB" id="gr9-bO-EzB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -32,6 +33,11 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hXv-0B-It1" customClass="GESlider">
+                    <rect key="frame" x="33" y="75" width="255" height="34"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

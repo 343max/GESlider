@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GESliderDelegate.h"
 
 @interface GESlider : UIControl
 
@@ -16,6 +17,11 @@
 @property (assign, nonatomic) float stepValue;
 
 @property (strong, nonatomic) UIColor *trackTintColor;
+
+@property (strong, readonly) UILabel *valueLabel;
+@property (assign) BOOL showValueLabelWhilePanning;
+
+@property (assign) id<GESliderDelegate> delegate;
 
 - (void)setValue:(float)value animated:(BOOL)animated;
 

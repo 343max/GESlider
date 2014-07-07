@@ -25,6 +25,7 @@
 @property (assign) BOOL needsStepViewRecreation;
 
 @property (assign, nonatomic) float internalValue;
+@property (assign) float recentLabelValue;
 
 @end
 
@@ -73,6 +74,12 @@
         return thumbImageView;
     })();
     
+    _valueLabel = (^{
+        UILabel *valueLabel = [[UILabel alloc] init];
+        [self addSubview:valueLabel];
+        return valueLabel;
+    })();
+    
     _gestureRecognizer = (^{
         UIPanGestureRecognizer *gestureReocgnizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
         [self.thumbImageView addGestureRecognizer:gestureReocgnizer];
@@ -102,10 +109,32 @@
     return frame;
 }
 
+- (float)steppedValueFoValue:(float)value
+{
+    if (self.stepValue == 0) {
+        return value;
+    } else {
+        return roundf((value - self.minimumValue) / self.stepValue) * self.stepValue + self.minimumValue;
+    }
+}
+
+- (void)updateLabelForValue:(float)value
+{
+    if (!self.showValueLabelWhilePanning)
+        return;
+    
+    
+}
+
 - (void)recreateStepViews
 {
     for (UIView *stepView in self.stepViews) {
         [stepView removeFromSuperview];
+    }
+    
+    if (self.stepValue == 0.0) {
+        _stepViews = nil;
+        return;
     }
     
     NSArray *stepViews = @[];
@@ -147,6 +176,7 @@
 {
     switch (panGestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
+            self.recentLabelValue = self.minimumValue - 1.0;
             self.touchOffset = [panGestureRecognizer locationInView:self.thumbImageView];
             break;
         case UIGestureRecognizerStateChanged:
@@ -164,10 +194,7 @@
     }
     
     if (panGestureRecognizer.state == UIGestureRecognizerStateEnded || panGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
-        float value = self.internalValue;
-        if (self.stepValue != 0.0) {
-            value = roundf((value - self.minimumValue) / self.stepValue) * self.stepValue + self.minimumValue;
-        }
+        float value = [self steppedValueFoValue:self.internalValue];
         [self setValue:value animated:YES];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
