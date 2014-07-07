@@ -260,29 +260,35 @@
 
 - (void)setMinimumValue:(float)minimumValue
 {
+    [self willChangeValueForKey:@"minimumValue"];
     _minimumValue = minimumValue;
     if (self.internalValue < minimumValue) {
         self.value = minimumValue;
     }
     self.needsStepViewRecreation = YES;
     [self setNeedsLayout];
+    [self didChangeValueForKey:@"minimumValue"];
 }
 
 - (void)setMaximumValue:(float)maximumValue
 {
+    [self willChangeValueForKey:@"maximumValue"];
     _maximumValue = maximumValue;
     if (self.internalValue > maximumValue) {
         self.value = maximumValue;
     }
     self.needsStepViewRecreation = YES;
     [self setNeedsLayout];
+    [self didChangeValueForKey:@"maximumValue"];
 }
 
 - (void)setStepValue:(float)stepValue
 {
+    [self willChangeValueForKey:@"stepValue"];
     _stepValue = stepValue;
     self.needsStepViewRecreation = YES;
     [self setNeedsLayout];
+    [self didChangeValueForKey:@"stepValue"];
 }
 
 - (void)setValue:(float)value
@@ -300,6 +306,8 @@
 
 - (void)setValue:(float)value animated:(BOOL)animated
 {
+    [self willChangeValueForKey:@"value"];
+    
     value = fminf(value, self.maximumValue);
     value = fmaxf(value, self.minimumValue);
   
@@ -313,6 +321,8 @@
     } else {
         [self setNeedsLayout];
     }
+    
+    [self didChangeValueForKey:@"value"];
 }
 
 - (void)tintColorDidChange
