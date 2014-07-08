@@ -69,6 +69,11 @@
 
     _thumbImageView = (^{
         UIImageView *thumbImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GESliderThumbImage"]];
+        CGRect frame = thumbImageView.frame;
+        frame.size.width = (fmax(frame.size.width, 44.0));
+        frame.size.height = (fmax(frame.size.height, 44.0));
+        thumbImageView.contentMode = UIViewContentModeCenter;
+        thumbImageView.frame = frame;
         [self addSubview:thumbImageView];
         thumbImageView.userInteractionEnabled = YES;
         return thumbImageView;
