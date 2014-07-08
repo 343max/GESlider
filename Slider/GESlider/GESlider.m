@@ -108,6 +108,9 @@
 
 - (float)relativeValueForValue:(float)value
 {
+    if (self.maximumValue == self.minimumValue)
+        return 0.0;
+    
     return (value - self.minimumValue) / (self.maximumValue - self.minimumValue);
 }
 
@@ -203,6 +206,14 @@
 
 - (void)doLayout
 {
+    if (self.minimumValue == self.maximumValue) {
+        self.gestureRecognizer.enabled = NO;
+        self.thumbImageView.alpha = 0.5;
+    } else {
+        self.gestureRecognizer.enabled = YES;
+        self.thumbImageView.alpha = 1.0;
+    }
+    
     if (self.needsStepViewRecreation) {
         self.needsStepViewRecreation = NO;
         [self recreateStepViews];
@@ -257,7 +268,7 @@
 
 - (void)updateThumbPosition
 {
-    CGRect frame = GERectInsideRect(self.bounds, self.thumbImageView.frame, (self.internalValue - self.minimumValue) / (self.maximumValue - self.minimumValue), 0.5);
+    CGRect frame = GERectInsideRect(self.bounds, self.thumbImageView.frame, (self.internalValue - self.minimumValue) / (self.maximumValue - self.minimumValue ?: 1.0), 0.5);
     frame.origin.x = roundf(frame.origin.x * 2.0) / 2.0;
     frame.origin.y = roundf(frame.origin.y * 2.0) / 2.0;
     self.thumbImageView.frame = frame;
