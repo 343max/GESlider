@@ -10,14 +10,15 @@
 #import "GELabelWithPadding.h"
 #import "GESliderDelegate.h"
 
+IB_DESIGNABLE
 @interface GESlider : UIControl
 
-@property (assign, nonatomic) float minimumValue;
-@property (assign, nonatomic) float maximumValue;
-@property (assign, nonatomic) float value;
-@property (assign, nonatomic) float stepValue;
+@property (assign, nonatomic) IBInspectable float minimumValue;
+@property (assign, nonatomic) IBInspectable float maximumValue;
+@property (assign, nonatomic) IBInspectable float value;
+@property (assign, nonatomic) IBInspectable float stepValue;
 
-@property (strong, nonatomic) UIColor *trackTintColor;
+@property (strong, nonatomic) IBInspectable UIColor *trackTintColor;
 
 @property (strong, readonly) GELabelWithPadding *valueLabel;
 @property (assign) BOOL showValueLabelWhilePanning;
