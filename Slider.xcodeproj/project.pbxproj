@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		500D2DFD197918C20090B3ED /* GERangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 500D2DFC197918C20090B3ED /* GERangeSlider.m */; };
 		501217041965921E002EFB5C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501217031965921E002EFB5C /* Foundation.framework */; };
 		501217061965921E002EFB5C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501217051965921E002EFB5C /* CoreGraphics.framework */; };
 		501217081965921E002EFB5C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501217071965921E002EFB5C /* UIKit.framework */; };
@@ -37,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		500D2DFB197918C20090B3ED /* GERangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GERangeSlider.h; sourceTree = "<group>"; };
+		500D2DFC197918C20090B3ED /* GERangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GERangeSlider.m; sourceTree = "<group>"; };
+		500D2DFE19791A4B0090B3ED /* GESlider_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GESlider_Private.h; sourceTree = "<group>"; };
 		501217001965921E002EFB5C /* Slider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		501217031965921E002EFB5C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		501217051965921E002EFB5C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -169,7 +173,10 @@
 				5012173D19659AB0002EFB5C /* GERectHelpers.h */,
 				5012173E19659AB0002EFB5C /* GERectHelpers.m */,
 				50121738196597EF002EFB5C /* GESlider.h */,
+				500D2DFE19791A4B0090B3ED /* GESlider_Private.h */,
 				50121739196597EF002EFB5C /* GESlider.m */,
+				500D2DFB197918C20090B3ED /* GERangeSlider.h */,
+				500D2DFC197918C20090B3ED /* GERangeSlider.m */,
 				5095CB1F196ADDAB008768DB /* GESliderDelegate.h */,
 				5095CB20196AE8AB008768DB /* GELabelWithPadding.h */,
 				5095CB21196AE8AB008768DB /* GELabelWithPadding.m */,
@@ -288,6 +295,7 @@
 				5012173F19659AB0002EFB5C /* GERectHelpers.m in Sources */,
 				5095CB22196AE8AB008768DB /* GELabelWithPadding.m in Sources */,
 				501217101965921E002EFB5C /* main.m in Sources */,
+				500D2DFD197918C20090B3ED /* GERangeSlider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

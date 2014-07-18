@@ -9,26 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "GERectHelpers.h"
-#import "GESlider.h"
-
-@interface GESlider ()
-
-@property (weak, readonly) UIImageView *thumbImageView;
-@property (weak, readonly) UIView *trackView;
-@property (weak, readonly) UIView *selectedTrackView;
-@property (weak, readonly) UIPanGestureRecognizer *gestureRecognizer;
-
-@property (strong, readonly) NSArray *stepViews;
-
-@property (assign) CGPoint touchOffset;
-
-@property (assign) BOOL needsStepViewRecreation;
-
-@property (assign, nonatomic) float internalValue;
-@property (assign) float recentLabelValue;
-
-@end
-
+#import "GESlider_Private.h"
 
 @implementation GESlider
 
@@ -50,7 +31,10 @@
 
 - (void)commonAwake
 {
-    _maximumValue = 1.0;
+    if (_maximumValue == 0.0) {
+        _maximumValue = 1.0;
+    }
+    
     _trackTintColor = [UIColor colorWithRed:0.907 green:0.901 blue:0.926 alpha:1.000];
     
     _trackView = (^{
@@ -67,17 +51,7 @@
         return selectedTrackView;
     })();
 
-    _thumbImageView = (^{
-        UIImageView *thumbImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GESliderThumbImage"]];
-        CGRect frame = thumbImageView.frame;
-        frame.size.width = (fmax(frame.size.width, 44.0));
-        frame.size.height = (fmax(frame.size.height, 44.0));
-        thumbImageView.contentMode = UIViewContentModeCenter;
-        thumbImageView.frame = frame;
-        [self addSubview:thumbImageView];
-        thumbImageView.userInteractionEnabled = YES;
-        return thumbImageView;
-    })();
+    _thumbImageView = [self thumbImageViewWithImage:self.thumbImage];
     
     _valueLabel = (^{
         GELabelWithPadding *valueLabel = [[GELabelWithPadding alloc] init];
@@ -266,12 +240,19 @@
     }
 }
 
-- (void)updateThumbPosition
+- (CGRect)thumbFrameWithValue:(float)value thumbSize:(CGSize)thumbSize
 {
-    CGRect frame = GERectInsideRect(self.bounds, self.thumbImageView.frame, (self.internalValue - self.minimumValue) / (self.maximumValue - self.minimumValue ?: 1.0), 0.5);
+    CGRect thumbFrame = (CGRect){CGPointZero, thumbSize};
+    CGRect frame = GERectInsideRect(self.bounds, thumbFrame, (value - self.minimumValue) / (self.maximumValue - self.minimumValue ?: 1.0), 0.5);
     frame.origin.x = roundf(frame.origin.x * 2.0) / 2.0;
     frame.origin.y = roundf(frame.origin.y * 2.0) / 2.0;
-    self.thumbImageView.frame = frame;
+    
+    return frame;
+}
+
+- (void)updateThumbPosition
+{
+    self.thumbImageView.frame = [self thumbFrameWithValue:self.internalValue thumbSize:self.thumbImageView.frame.size];
 }
 
 - (void)setMinimumValue:(float)minimumValue
@@ -354,6 +335,35 @@
     
     _trackTintColor = trackTintColor;
     [self doLayout];
+}
+
+@synthesize thumbImage = _thumbImage;
+- (UIImage *)thumbImage
+{
+    if (_thumbImage == nil) {
+        _thumbImage = [UIImage imageNamed:@"GESliderThumbImage"];
+    }
+    
+    return _thumbImage;
+}
+
+- (void)setThumbImage:(UIImage *)thumbImage
+{
+    _thumbImage = thumbImage;
+    self.thumbImageView.image = _thumbImage;
+}
+
+- (UIImageView *)thumbImageViewWithImage:(UIImage *)image
+{
+    UIImageView *thumbImageView = [[UIImageView alloc] initWithImage:image];
+    CGRect frame = thumbImageView.frame;
+    frame.size.width = (fmax(frame.size.width, 44.0));
+    frame.size.height = (fmax(frame.size.height, 44.0));
+    thumbImageView.contentMode = UIViewContentModeCenter;
+    thumbImageView.frame = frame;
+    [self addSubview:thumbImageView];
+    thumbImageView.userInteractionEnabled = YES;
+    return thumbImageView;
 }
 
 @end

@@ -20,6 +20,8 @@ IB_DESIGNABLE
 
 @property (strong, nonatomic) IBInspectable UIColor *trackTintColor;
 
+@property (strong, nonatomic) IBInspectable UIImage *thumbImage;
+
 @property (strong, readonly) GELabelWithPadding *valueLabel;
 @property (assign) BOOL showValueLabelWhilePanning;
 
