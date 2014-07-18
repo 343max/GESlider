@@ -11,6 +11,14 @@
 #import "GERectHelpers.h"
 #import "GESlider_Private.h"
 
+GERange GERangeMake(float lowerValue, float upperValue)
+{
+    GERange range;
+    range.lowerValue = lowerValue;
+    range.upperValue = upperValue;
+    return range;
+}
+
 @implementation GESlider
 
 - (id)initWithFrame:(CGRect)frame
@@ -93,11 +101,12 @@
     return (value - self.minimumValue) / (self.maximumValue - self.minimumValue);
 }
 
-- (CGRect)trackViewFrameForValue:(float)value
+- (CGRect)trackViewFrameForLowerValue:(float)lowerValue upperValue:(float)upperValue
 {
     CGRect frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame), 3.0);
     frame = GERectInsideRect(self.bounds, frame, 0.5, 0.5);
-    frame.size.width = roundf(frame.size.width * [self relativeValueForValue:value] * 2.0) / 2.0;
+    frame.origin.x += roundf(frame.size.width * [self relativeValueForValue:lowerValue] * 2.0) / 2.0;
+    frame.size.width = roundf(frame.size.width * [self relativeValueForValue:upperValue - lowerValue + self.minimumValue] * 2.0) / 2.0;
     return frame;
 }
 
@@ -134,7 +143,7 @@
     
     CGRect frame = CGRectZero;
     frame.size = [self.valueLabel sizeThatFits:CGSizeZero];
-    frame.origin.x = CGRectGetMaxX([self trackViewFrameForValue:value]) - frame.size.width / 2.0;
+    frame.origin.x = CGRectGetMaxX([self trackViewFrameForLowerValue:self.minimumValue upperValue:value]) - frame.size.width / 2.0;
     frame.origin.y = CGRectGetMinY(self.thumbImageView.frame) - frame.size.height;
     
     if (self.valueLabel.superview == nil) {
@@ -183,6 +192,11 @@
     _stepViews = stepViews;
 }
 
+- (GERange)highligtedRange
+{
+    return GERangeMake(self.minimumValue, self.internalValue);
+}
+
 - (void)doLayout
 {
     if (self.minimumValue == self.maximumValue) {
@@ -199,15 +213,17 @@
     }
     
     CGRect frame = CGRectInset(self.bounds, (CGRectGetWidth(self.thumbImageView.frame) - CGRectGetWidth([[self.stepViews firstObject] frame])) / 2.0, 0.0);
+    GERange highlightedRange = [self highligtedRange];
     for (UIView *stepView in self.stepViews) {
         NSInteger index = [self.stepViews indexOfObject:stepView];
         float value = self.minimumValue + index * self.stepValue;
-        stepView.backgroundColor = (value > self.internalValue ? self.trackTintColor : self.tintColor);
+        stepView.backgroundColor = (value <= highlightedRange.upperValue && value >= highlightedRange.lowerValue ? self.tintColor : self.trackTintColor);
         stepView.frame = GERectInsideRect(frame, stepView.frame, [self relativeValueForValue:value], 0.5);
     }
     
-    self.trackView.frame = [self trackViewFrameForValue:self.maximumValue];
-    self.selectedTrackView.frame = [self trackViewFrameForValue:self.internalValue];
+    self.trackView.frame = [self trackViewFrameForLowerValue:self.minimumValue upperValue:self.maximumValue];
+    self.selectedTrackView.frame = [self trackViewFrameForLowerValue:highlightedRange.lowerValue
+                                                          upperValue:highlightedRange.upperValue];
     
     self.trackView.backgroundColor = self.trackTintColor;
     self.selectedTrackView.backgroundColor = self.tintColor;

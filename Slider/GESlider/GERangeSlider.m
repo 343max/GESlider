@@ -83,6 +83,11 @@
     [self didChangeValueForKey:@"upperValue"];
 }
 
+- (GERange)highligtedRange
+{
+    return GERangeMake(self.internalValue, self.internalUpperValue);
+}
+
 - (void)updateUpperThumbPosition
 {
     self.upperThumbImageView.frame = [self thumbFrameWithValue:self.internalUpperValue thumbSize:self.upperThumbImageView.frame.size];

@@ -16,7 +16,9 @@
 - (float)steppedValueForValue:(float)value;
 - (CGRect)thumbFrameWithValue:(float)value thumbSize:(CGSize)thumbSize;
 - (UIPanGestureRecognizer *)thumbPanGestureRecognizer;
-- (void)updateValue:(float)value forGestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer gestureFinished:(BOOL)gestureFinished;
+- (void)updateValue:(float)value forGestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer
+    gestureFinished:(BOOL)gestureFinished;
+- (GERange)highligtedRange;
 
 @property (weak, readonly) UIImageView *thumbImageView;
 @property (weak, readonly) UIView *trackView;

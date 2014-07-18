@@ -10,6 +10,14 @@
 #import "GELabelWithPadding.h"
 #import "GESliderDelegate.h"
 
+struct GERange {
+    float lowerValue;
+    float upperValue;
+};
+typedef struct GERange GERange;
+GERange GERangeMake(float lowerValue, float upperValue);
+
+
 IB_DESIGNABLE
 @interface GESlider : UIControl
 
