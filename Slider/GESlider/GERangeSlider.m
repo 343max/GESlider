@@ -97,9 +97,12 @@
 {
     if (gestureRecognizer != self.upperPanGestureRecognizer) {
         [self addSubview:self.thumbImageView];
+        value = fminf(value, self.upperValue - self.minimumDifference);
         [super updateValue:value forGestureRecognizer:gestureRecognizer gestureFinished:gestureFinished];
     } else {
         [self addSubview:self.upperThumbImageView];
+        value = fmaxf(value, self.value + self.minimumDifference);
+        value = fminf(value, self.maximumValue);
         if (gestureFinished) {
             value = [self steppedValueForValue:value];
             [self setUpperValue:value animated:YES];
