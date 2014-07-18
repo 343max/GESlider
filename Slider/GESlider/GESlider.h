@@ -18,20 +18,19 @@ typedef struct GERange GERange;
 GERange GERangeMake(float lowerValue, float upperValue);
 
 
-IB_DESIGNABLE
 @interface GESlider : UIControl
 
-@property (assign, nonatomic) IBInspectable float minimumValue;
-@property (assign, nonatomic) IBInspectable float maximumValue;
-@property (assign, nonatomic) IBInspectable float value;
-@property (assign, nonatomic) IBInspectable float stepValue;
+@property (assign, nonatomic) float minimumValue;
+@property (assign, nonatomic) float maximumValue;
+@property (assign, nonatomic) float value;
+@property (assign, nonatomic) float stepValue;
 
-@property (strong, nonatomic) IBInspectable UIColor *trackTintColor;
+@property (strong, nonatomic) UIColor *trackTintColor;
 
-@property (strong, nonatomic) IBInspectable UIImage *thumbImage;
+@property (strong, nonatomic) UIImage *thumbImage;
 
 @property (strong, readonly) GELabelWithPadding *valueLabel;
-@property (assign) IBInspectable BOOL showValueLabelWhilePanning;
+@property (assign) BOOL showValueLabelWhilePanning;
 
 @property (assign) id<GESliderDelegate> delegate;
 

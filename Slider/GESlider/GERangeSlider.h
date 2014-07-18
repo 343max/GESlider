@@ -10,10 +10,10 @@
 
 @interface GERangeSlider : GESlider
 
-@property (assign, nonatomic) IBInspectable float upperValue;
-@property (assign, nonatomic) IBInspectable float minimumDifference;
+@property (assign, nonatomic) float upperValue;
+@property (assign, nonatomic) float minimumDifference;
 
-@property (strong, nonatomic) IBInspectable UIImage *upperThumbImage;
+@property (strong, nonatomic) UIImage *upperThumbImage;
 
 - (void)setUpperValue:(float)upperValue animated:(BOOL)animated;
 
