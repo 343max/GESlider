@@ -237,7 +237,7 @@ GERange GERangeMake(float lowerValue, float upperValue)
         [self setValue:[self steppedValueForValue:value] animated:YES];
     } else {
         self.internalValue = value;
-        [self updateLabelForValue:value];
+        [self updateLabelForValue:self.internalValue];
     }
 }
 
