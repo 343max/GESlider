@@ -15,4 +15,6 @@
 
 @property (strong, nonatomic) IBInspectable UIImage *upperThumbImage;
 
+- (void)setUpperValue:(float)upperValue animated:(BOOL)animated;
+
 @end

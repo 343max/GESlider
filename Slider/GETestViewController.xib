@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GETestViewController">
             <connections>
                 <outlet property="label" destination="TIe-9d-aIx" id="Xdm-TI-zjj"/>
+                <outlet property="rangeSlider" destination="Jzq-bp-5EK" id="tCF-Rh-Fcg"/>
                 <outlet property="slider" destination="hXv-0B-It1" id="znj-YQ-iKD"/>
                 <outlet property="steppingSlider" destination="16B-Lc-OuB" id="gr9-bO-EzB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

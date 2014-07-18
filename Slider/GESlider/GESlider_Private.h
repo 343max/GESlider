@@ -13,7 +13,10 @@
 - (UIImageView *)thumbImageViewWithImage:(UIImage *)image;
 - (void)commonAwake;
 - (void)doLayout;
+- (float)steppedValueForValue:(float)value;
 - (CGRect)thumbFrameWithValue:(float)value thumbSize:(CGSize)thumbSize;
+- (UIPanGestureRecognizer *)thumbPanGestureRecognizer;
+- (void)updateValue:(float)value forGestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer gestureFinished:(BOOL)gestureFinished;
 
 @property (weak, readonly) UIImageView *thumbImageView;
 @property (weak, readonly) UIView *trackView;

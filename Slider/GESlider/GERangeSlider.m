@@ -15,6 +15,8 @@
 
 @property (assign) float internalUpperValue;
 
+@property (weak, readonly) UIPanGestureRecognizer *upperPanGestureRecognizer;
+
 @end
 
 
@@ -25,6 +27,12 @@
     self.internalUpperValue = self.upperValue;
     [super commonAwake];
     _upperThumbImageView = [self thumbImageViewWithImage:self.upperThumbImage];
+    
+    _upperPanGestureRecognizer = (^{
+        UIPanGestureRecognizer *panGestureRecognizer = [self thumbPanGestureRecognizer];
+        [self.upperThumbImageView addGestureRecognizer:panGestureRecognizer];
+        return panGestureRecognizer;
+    })();
 }
 
 - (void)doLayout
@@ -49,9 +57,52 @@
     self.upperThumbImageView.image = _upperThumbImage;
 }
 
+- (void)setUpperValue:(float)upperValue
+{
+    [self setUpperValue:upperValue animated:NO];
+}
+
+- (void)setUpperValue:(float)upperValue animated:(BOOL)animated
+{
+    [self willChangeValueForKey:@"upperValue"];
+    
+    upperValue = fminf(upperValue, self.maximumValue);
+    upperValue = fmaxf(upperValue, self.minimumValue);
+
+    self.internalUpperValue = _upperValue = upperValue;
+    
+    if (animated) {
+        [UIView animateWithDuration:0.1
+                         animations:^{
+                             [self doLayout];
+                         }];
+    } else {
+        [self setNeedsLayout];
+    }
+    
+    [self didChangeValueForKey:@"upperValue"];
+}
+
 - (void)updateUpperThumbPosition
 {
     self.upperThumbImageView.frame = [self thumbFrameWithValue:self.internalUpperValue thumbSize:self.upperThumbImageView.frame.size];
+}
+
+- (void)updateValue:(float)value forGestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer gestureFinished:(BOOL)gestureFinished
+{
+    if (gestureRecognizer != self.upperPanGestureRecognizer) {
+        [self addSubview:self.thumbImageView];
+        [super updateValue:value forGestureRecognizer:gestureRecognizer gestureFinished:gestureFinished];
+    } else {
+        [self addSubview:self.upperThumbImageView];
+        if (gestureFinished) {
+            value = [self steppedValueForValue:value];
+            [self setUpperValue:value animated:YES];
+        } else {
+            self.internalUpperValue = value;
+            [self doLayout];
+        }
+    }
 }
 
 @end

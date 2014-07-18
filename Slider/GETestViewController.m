@@ -7,6 +7,7 @@
 //
 
 #import "GESlider/GESlider.h"
+#import "GESlider/GERangeSlider.h"
 
 #import "GETestViewController.h"
 
@@ -15,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet GESlider *steppingSlider;
 @property (weak, nonatomic) IBOutlet GESlider *slider;
 @property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet GERangeSlider *rangeSlider;
 
 @end
 
@@ -48,6 +50,8 @@
     self.slider.minimumValue = 0.0;
     self.slider.maximumValue = 10.0;
     self.slider.showValueLabelWhilePanning = YES;
+    
+    self.rangeSlider.upperValue = 15.0;
 }
 
 - (IBAction)didSlide:(GESlider *)sender

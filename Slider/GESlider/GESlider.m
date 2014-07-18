@@ -65,12 +65,17 @@
     })();
     
     _gestureRecognizer = (^{
-        UIPanGestureRecognizer *gestureReocgnizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
+        UIPanGestureRecognizer *gestureReocgnizer = [self thumbPanGestureRecognizer];
         [self.thumbImageView addGestureRecognizer:gestureReocgnizer];
         return gestureReocgnizer;
     })();
     
     [self doLayout];
+}
+
+- (UIPanGestureRecognizer *)thumbPanGestureRecognizer
+{
+    return [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
 }
 
 - (void)layoutSubviews
@@ -210,20 +215,33 @@
     [self updateThumbPosition];
 }
 
+- (void)updateValue:(float)value forGestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer gestureFinished:(BOOL)gestureFinished
+{
+    if (gestureFinished) {
+        [self setValue:[self steppedValueForValue:value] animated:YES];
+    } else {
+        self.internalValue = value;
+        [self updateLabelForValue:value];
+    }
+}
+
 - (void)didPan:(UIPanGestureRecognizer *)panGestureRecognizer
 {
+    float value = 0.0;
+    
     switch (panGestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
             self.recentLabelValue = self.minimumValue - 1.0;
-            self.touchOffset = [panGestureRecognizer locationInView:self.thumbImageView];
+            self.touchOffset = [panGestureRecognizer locationInView:panGestureRecognizer.view];
             break;
         case UIGestureRecognizerStateChanged:
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
             CGPoint location = [panGestureRecognizer locationInView:self];
             float offset = (location.x - self.touchOffset.x) / (CGRectGetWidth(self.bounds) - CGRectGetWidth(self.thumbImageView.frame));
-            self.internalValue = offset * (self.maximumValue - self.minimumValue) + self.minimumValue;
-            [self updateLabelForValue:self.internalValue];
+            value = offset * (self.maximumValue - self.minimumValue) + self.minimumValue;
+            [self updateValue:value forGestureRecognizer:panGestureRecognizer gestureFinished:NO];
+            
             [self doLayout];
             break;
         }
@@ -233,8 +251,7 @@
     }
     
     if (panGestureRecognizer.state == UIGestureRecognizerStateEnded || panGestureRecognizer.state == UIGestureRecognizerStateCancelled) {
-        float value = [self steppedValueForValue:self.internalValue];
-        [self setValue:value animated:YES];
+        [self updateValue:value forGestureRecognizer:panGestureRecognizer gestureFinished:YES];
         [self removeValueLabelAnimated];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
