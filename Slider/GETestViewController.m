@@ -52,6 +52,7 @@
     self.slider.showValueLabelWhilePanning = YES;
     
     self.rangeSlider.upperValue = 15.0;
+    self.rangeSlider.delegate = self;
 }
 
 - (IBAction)didSlide:(GESlider *)sender
@@ -70,13 +71,17 @@
 
 - (NSString *)descriptionForValue:(float)value ofSlider:(GESlider *)slider
 {
-    switch ((int)value) {
-        case 0:
-            return @"No Stops";
-        case 1:
-            return @"1 Stop";
-        default:
-            return [NSString stringWithFormat:@"%.0f Stops", value];
+    if (slider == self.rangeSlider) {
+        return [NSString stringWithFormat:@"%.0f:00", value];
+    } else {
+        switch ((int)value) {
+            case 0:
+                return @"No Stops";
+            case 1:
+                return @"1 Stop";
+            default:
+                return [NSString stringWithFormat:@"%.0f Stops", value];
+        }
     }
 }
 
