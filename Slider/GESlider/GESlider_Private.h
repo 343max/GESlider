@@ -19,6 +19,7 @@
 - (void)updateValue:(float)value forGestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer
     gestureFinished:(BOOL)gestureFinished;
 - (GERange)highligtedRange;
+- (void)updateLabelForValue:(float)value;
 
 @property (weak, readonly) UIImageView *thumbImageView;
 @property (weak, readonly) UIView *trackView;

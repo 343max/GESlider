@@ -31,7 +31,7 @@ IB_DESIGNABLE
 @property (strong, nonatomic) IBInspectable UIImage *thumbImage;
 
 @property (strong, readonly) GELabelWithPadding *valueLabel;
-@property (assign) BOOL showValueLabelWhilePanning;
+@property (assign) IBInspectable BOOL showValueLabelWhilePanning;
 
 @property (assign) id<GESliderDelegate> delegate;
 

@@ -105,6 +105,7 @@
             [self setUpperValue:value animated:YES];
         } else {
             self.internalUpperValue = value;
+            [self updateLabelForValue:value];
             [self doLayout];
         }
     }

@@ -58,6 +58,7 @@
                         <userDefinedRuntimeAttribute type="number" keyPath="stepValue">
                             <real key="value" value="3"/>
                         </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="showValueLabelWhilePanning" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
