@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name               = "GESlider"
-  s.version            = "0.1"
+  s.version            = "0.2"
   s.requires_arc       = true
-  s.summary            = "A short description of GESlider."
+  s.summary            = "Another Slider (stepable, range slider)"
 
   s.homepage           = "https://github.com/343max/GESlider"
   s.license            = { :type => "BSD", :file => "LICENSE" }
