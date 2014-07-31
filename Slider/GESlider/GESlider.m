@@ -176,7 +176,7 @@ GERange GERangeMake(float lowerValue, float upperValue)
         [stepView removeFromSuperview];
     }
     
-    if (self.stepValue == 0.0) {
+    if (self.stepValue == 0.0 || self.stepBumpersHidden) {
         _stepViews = nil;
         return;
     }
@@ -286,6 +286,17 @@ GERange GERangeMake(float lowerValue, float upperValue)
 - (void)updateThumbPosition
 {
     self.thumbImageView.frame = [self thumbFrameWithValue:self.internalValue thumbSize:self.thumbImageView.frame.size];
+}
+
+- (void)setStepBumpersHidden:(BOOL)stepBumpersHidden
+{
+    if (stepBumpersHidden == _stepBumpersHidden)
+        return;
+    
+    _stepBumpersHidden = stepBumpersHidden;
+    
+    self.needsStepViewRecreation = YES;
+    [self setNeedsLayout];
 }
 
 - (void)setMinimumValue:(float)minimumValue

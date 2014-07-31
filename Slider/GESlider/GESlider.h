@@ -24,6 +24,7 @@ GERange GERangeMake(float lowerValue, float upperValue);
 @property (assign, nonatomic) float maximumValue;
 @property (assign, nonatomic) float value;
 @property (assign, nonatomic) float stepValue;
+@property (assign, nonatomic) BOOL stepBumpersHidden;
 
 @property (strong, nonatomic) UIColor *trackTintColor;
 
